@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="30090">
+        <setting label="30091" type="bool" id="genepg" default="false"/>
+        <setting label="30093" type="slider" id="gen_delay" default="12" range="12,12,120" option="int" enable="eq(-1,true)"/>
+        <setting label="30094" type="slider" id="gen_days" default="7" range="1,1,7" option="int" enable="eq(-2,true)"/>
+        <setting label="30095" type="bool" id="genplot" default="false"/>
+    </category>
+    <category label="30100">
+        <setting label="30101" type="lsep"/>
+        <setting label="30102" type="text" id="mrkzemail" default="c3761381@urhen.com"/>
+        <setting label="30103" type="text" option="hidden" id="mrkzpassword" default="heslo123"/>
+    </category>
+    <category label="30110">
+        <setting label="30111" type="bool" id="rtvsmpd" default="false"/>
+        <!--setting label="30112" type="bool" id="rtvsalt" default="false" visible="false"/-->
+    </category>
+    <category label="30120">
+        <setting label="30121" type="bool" id="ockompd" default="false"/>
+    </category>
+    <!--category label="30130">
+        <setting label="30131" type="bool" id="retroparse" default="true"/>
+        <setting label="30132" type="bool" id="retroalt" default="true"/>
+    </category-->
+    <!--category label="30140">
+        <setting label="30141" type="bool" id="prefer_jojplay" default="true"/>
+    </category-->
+</settings>

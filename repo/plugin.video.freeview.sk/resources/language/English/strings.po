@@ -1,0 +1,196 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sk\n"
+
+msgctxt "#30000"
+msgid "Zoznam staníc v playliste"
+msgstr "Zoznam staníc v playliste"
+
+msgctxt "#30001"
+msgid "Info"
+msgstr "Info"
+
+msgctxt "#30002"
+msgid "Extrahovať playlist"
+msgstr "Extrahovať playlist"
+
+msgctxt "#30003"
+msgid "Nastaviť playlist do PVR IPTV Simple Client priamo z pluginu"
+msgstr "Nastaviť playlist do PVR IPTV Simple Client priamo z pluginu"
+
+msgctxt "#30004"
+msgid "Nastavenia"
+msgstr "Nastavenia"
+
+msgctxt "#30005"
+msgid "Nastavenia PVR IPTV Simple Client"
+msgstr "Nastavenia PVR IPTV Simple Client"
+
+msgctxt "#30006"
+msgid "Nastaviť phazebox.com epg do PVR IPTV Simple Client"
+msgstr "Nastaviť phazebox.com epg do PVR IPTV Simple Client"
+
+msgctxt "#30007"
+msgid "Nastaviť generované epg do PVR IPTV Simple Client"
+msgstr "Nastaviť generované epg do PVR IPTV Simple Client"
+
+msgctxt "#30008"
+msgid "Pregenerovať EPG"
+msgstr "Pregenerovať EPG"
+
+msgctxt "#30010"
+msgid "Nemáš nainštalovaný PVR IPTV Simple Client"
+msgstr "Nemáš nainštalovaný PVR IPTV Simple Client"
+
+msgctxt "#30011"
+msgid "Meno používateľa phazebox.com"
+msgstr "Meno používateľa phazebox.com"
+
+msgctxt "#30012"
+msgid "Email používateľa phazebox.com"
+msgstr "Email používateľa phazebox.com"
+
+msgctxt "#30090"
+msgid "Všeobecné"
+msgstr "Všeobecné"
+
+msgctxt "#30091"
+msgid "Generovanie epg"
+msgstr "Generovanie epg"
+
+msgctxt "#30092"
+msgid "EPG pre freeview vygenerované"
+msgstr "EPG pre freeview vygenerované"
+
+msgctxt "#30093"
+msgid "Interval generovania v hodinách"
+msgstr "Interval generovania v hodinách"
+
+msgctxt "#30094"
+msgid "Koľko dní generovať"
+msgstr "Koľko dní generovať"
+
+msgctxt "#30095"
+msgid "Zobrazovať program pri náhľade staníc cez doplnok"
+msgstr "Zobrazovať program pri náhľade staníc cez doplnok"
+
+msgctxt "#30100"
+msgid "Markíza"
+msgstr "Markíza"
+
+msgctxt "#30101"
+msgid "Prihlasovacie konto do markízy"
+msgstr "Prihlasovacie konto do markízy"
+
+msgctxt "#30102"
+msgid "Email"
+msgstr "Email"
+
+msgctxt "#30103"
+msgid "Heslo"
+msgstr "Heslo"
+
+msgctxt "#30105"
+msgid "Sorry, nepodarilo sa mi získať: "
+msgstr "Sorry, nepodarilo sa mi získať: "
+
+msgctxt "#30110"
+msgid "RTVS"
+msgstr "RTVS"
+
+msgctxt "#30111"
+msgid "Preferovať DASH streams (mpd)"
+msgstr "Preferovať DASH streams (mpd)"
+
+msgctxt "#30112"
+msgid "Použiť alternatívne streamy"
+msgstr "Použiť alternatívne streamy"
+
+msgctxt "#30120"
+msgid "Óčko"
+msgstr "Óčko"
+
+msgctxt "#30121"
+msgid "Preferovať DASH streams (mpd)"
+msgstr "Preferovať DASH streams (mpd)"
+
+msgctxt "#30130"
+msgid "Retro"
+msgstr "Retro"
+
+msgctxt "#30131"
+msgid "Použiť najvyšší bitrate namiesto adaptívneho (ktorý blbne)"
+msgstr "Použiť najvyšší bitrate namiesto adaptívneho (ktorý blbne)"
+
+msgctxt "#30132"
+msgid "Použiť alternatívne streamy"
+msgstr "Použiť alternatívne streamy"
+
+msgctxt "#30140"
+msgid "Joj"
+msgstr "Joj"
+
+msgctxt "#30141"
+msgid "Preferuj JojPlay streamy"
+msgstr "Preferuj JojPlay streamy"
+
+msgctxt "#30301"
+msgid "Lounge TV ide prehrať len na Kodi Nexus a novšom."
+msgstr "Lounge TV ide prehrať len na Kodi Nexus a novšom."
+
+msgctxt "#30302"
+msgid "Lounge TV využíva Widevine DRM, preto potrebuje addon InputStream Helper."
+msgstr "Lounge TV využíva Widevine DRM, preto potrebuje addon InputStream Helper."
+
+msgctxt "#30900"
+msgid "Playlist bol skopírovaný"
+msgstr "Playlist bol skopírovaný"
+
+msgctxt "#30901"
+msgid "Nepodarilo sa skopírovať playlist."
+msgstr "Nepodarilo sa skopírovať playlist."
+
+msgctxt "#30902"
+msgid "Vo vybranom adresári už existuje playlist.m3u - prepísať?"
+msgstr "Vo vybranom adresári už existuje playlist.m3u - prepísať?"
+
+msgctxt "#30903"
+msgid "Proces spustený, počkajte na výsledok."
+msgstr "Proces spustený, počkajte na výsledok."
+
+msgctxt "#30904"
+msgid "Vyberte profil z PVR IPTV Simple Client"
+msgstr "Vyberte profil z PVR IPTV Simple Client"
+
+msgctxt "#30905"
+msgid "Nevybrali ste profil na aplikovanie nastavení. Ak žiaden nebol k dispozícii, musíte ho najprv vytvoriť v PVR IPTV Simple Client."
+msgstr "Nevybrali ste profil na aplikovanie nastavení. Ak žiaden nebol k dispozícii, musíte ho najprv vytvoriť v PVR IPTV Simple Client."
+
+msgctxt "#30906"
+msgid "Nastavené. Niekedy je potrebný reštart Kodi a Vymazanie údajov v nastaveniach PVR - TV Program."
+msgstr "Nastavené. Niekedy je potrebný reštart Kodi a Vymazanie údajov v nastaveniach PVR - TV Program."
+
+msgctxt "#30996"
+msgid "Tento doplnok je určený pre používateľov na slovensku. Ty patríš ku {} percentám, ktoré ho používajú mimo slovenska. Nepokaz nám to zbytočne."
+msgstr "Tento doplnok je určený pre používateľov na slovensku. Ty patríš ku {} percentám, ktoré ho používajú mimo slovenska. Nepokaz nám to zbytočne."
+
+msgctxt "#30997"
+msgid "Nepodarilo sa prihlásiť. Odporúčam zaregistrovať si vlastné konto na markiza.sk a nastaviť ho v nastaveniach."
+msgstr "Nepodarilo sa prihlásiť. Odporúčam zaregistrovať si vlastné konto na markiza.sk a nastaviť ho v nastaveniach."
+
+msgctxt "#30998"
+msgid "Určite chcete pokračovať?"
+msgstr "Určite chcete pokračovať?"
+
+msgctxt "#30999"
+msgid "Plugin slúži na získanie streamov voľne dostupných vysielaní televízií na Slovensku a určený je pre región Slovensko (nie, fakt Markiza nepôjde v CZ).\n\n"
+"Slovenské, hudobné a dve ČT stanice sú verejne dostupné cez ich webstránky zo slovenska, Nova má geoblokáciu len na web stránke a pre Primu je spustená proxy na získanie streamu, ktorý už následne ide napriamo na ich servre. Všetko sú to oficiálne retransmisie.\n"
+"K prehrávaniu je potrebný nainštalovaný a povolený InputStream Adaptive a odporúčam aj PVR IPTV Simple Client.\n"
+"Playlist je statický, meniť sa môže len aktualizáciou celého pluginu, ale odvoláva sa nazad na plugin, takže nefunguje samostatne ani mimo Kodi.\n"
+"Znamená to, že ho môžte teoreticky skopírovať a rozšíriť o streamy, ktoré máte sami k dispozícii.\n"
+"V menu si môžete vybrat extrakciu playlistu, alebo automatické nastavenie PVR IPTV Simple Client na playlist priamo v plugine.\n"
+"Plugin vie aj generovať epg zo Skylink služby, zapnutie a vypnutie je v nastaveniach, v menu je tiež možné nastavenie epg do PVR IPTV Simple Client-a.\n"
+"V nastaveniach sú rôzne možnosti, napríklad v prípade, že Markíza nefunguje, skúste si zaregistorvať vlastné konto a zmeniť ho tam."
+msgstr ""
+
