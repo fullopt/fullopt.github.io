@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.freeview.sk" version="2.0.0" name="freeview.sk" provider-name="cache-sk">
+<addon id="plugin.video.freeview.sk" version="2.1.0" name="freeview.sk" provider-name="cache-sk">
     <requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.beautifulsoup4"/>
@@ -21,8 +21,10 @@
             <icon>icon.jpg</icon>
         </assets>
         <news>
+[B]2.1.0[/B]
+- HU streamy: M1, M2, M4 Sport+/Duna World, M5, RTL Klub, RTL II, TV2, Super TV2, Film+
 [B]2.0.0[/B]
-- Novy zdroj skylink EPG
+- Funkcny zdroj skylink EPG
 [B]1.1.7[/B]
 - zablokovany EPG procesing, bohuzial skylink zrejme zmenil / vypol stary protokol
 [B]1.1.6[/B]
