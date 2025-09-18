@@ -248,7 +248,6 @@ def router(paramstring):
         params = dict(parse_qsl(paramstring))
         if params:
             if 'provider' in params:
-                epgprocessor.get_info(_addon, xbmcgui)
                 provider = params['provider']
                 module = import_module(provider)
                 module.play(_handle, _addon, params)

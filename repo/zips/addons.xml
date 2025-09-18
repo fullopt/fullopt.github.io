@@ -17,7 +17,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.freeview.sk" version="2.1.0" name="freeview.sk" provider-name="cache-sk">
+</addon><addon id="plugin.video.freeview.sk" version="2.2.0" name="freeview.sk" provider-name="cache-sk">
     <requires>
         <import addon="script.module.requests" />
         <import addon="script.module.beautifulsoup4" />
@@ -39,6 +39,8 @@
             <icon>icon.jpg</icon>
         </assets>
         <news>
+[B]2.2.0[/B]
+- EN streamy: UK, US, Bugfixy
 [B]2.1.0[/B]
 - HU streamy: M1, M2, M4 Sport+/Duna World, M5, RTL Klub, RTL II, TV2, Super TV2, Film+
 [B]2.0.0[/B]

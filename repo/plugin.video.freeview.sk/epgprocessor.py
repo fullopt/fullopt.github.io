@@ -6,61 +6,56 @@
 import io
 import os
 import sys
-import random
 import requests
 import datetime
 import time
 import xbmc
-import unicodedata
 import xml.etree.ElementTree as ET
 from dateutil.tz import tzutc, tzlocal
-from bs4 import BeautifulSoup
-
 
 sys.path.append(os.path.join (os.path.dirname(__file__), 'resources', 'providers'))
 
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'}
-REPO = "http://p.xf.cz"
-REPO2 = "http://p.6f.sk"
-EPG_URL = "https://raw.githubusercontent.com/370network/skylink-xmltv/refs/heads/main/a3b_a1.xml"
-
-
-def get_info(a,x):
-    try:
-        session = requests.Session()
-        session.headers.update(HEADERS)
-        response = session.get("https://ipapi.co/country/")
-        code = response.text
-        if len(code) < 4:
-            response = session.get(REPO+"/geo.php?code="+code)
-            stats = response.json()
-            if "bad" in stats and stats["bad"] and "percentage" in stats and random.randrange(100) < stats["percentage"]:
-                x.Dialog().ok(a.getAddonInfo('name'), a.getLocalizedString(30996).format(stats["percentage"]))
-    except Exception as e:
-        pass
-
-    #load index and banner, so page will not be delted
-    try:
-        response = session.get(REPO2, headers=HEADERS)
-        response = session.get(REPO, headers=HEADERS)
-        html = BeautifulSoup(response.content, features="html.parser")
-        items = html.find_all('script',{},True)
-        for item in items:
-            if item.has_attr('src'):
-                src = REPO + item["src"] if item["src"].startswith("/") and not item["src"].startswith("//") else item["src"]
-                response = session.get("http:"+src if src.startswith("//") else src, headers=HEADERS)
-    except:
-        pass
+EPG_GITHUB_OWNER = "370network"
+EPG_GITHUB_REPO = "skylink-xmltv"
+EPG_GITHUB_BRANCH = "main"
+EPG_GITHUB_FILEPATH = "a3b_a1.xml"
 
 def ts(dt):
     return int(time.mktime(dt.timetuple())) * 1000
-    
-def remove_diacritics(text):
-    # Normalizujeme na NFKD a z diakritiky zostanú len znaky, ktoré sú v ASCII
-    normalized = unicodedata.normalize('NFKD', text)
-    ascii_text = normalized.encode('ascii', 'ignore').decode('ascii')
-    return ascii_text
 
+def find_version_with_program():
+    # Step 1: Get commit history for the file
+    commits_url = f"https://api.github.com/repos/{EPG_GITHUB_OWNER}/{EPG_GITHUB_REPO}/commits"
+    params = {"path": EPG_GITHUB_FILEPATH, "sha": EPG_GITHUB_BRANCH, "per_page": 10}
+    commits = []
+    page = 1
+    
+    session = requests.Session()
+
+    while True:
+        params["page"] = page
+        r = session.get(commits_url, params=params, headers=HEADERS)
+        r.raise_for_status()
+        data = r.json()
+        if not data:
+            break
+        commits.extend(data)
+        page += 1
+
+    # Step 2: Iterate commits from newest to oldest
+    for commit in commits:
+        sha = commit["sha"]
+        raw_url = f"https://raw.githubusercontent.com/{EPG_GITHUB_OWNER}/{EPG_GITHUB_REPO}/{sha}/{EPG_GITHUB_FILEPATH}"
+        r = session.get(raw_url, headers=HEADERS)
+        if r.status_code != 200:
+            continue  # file may not exist in this commit
+        content = r.text
+        if "<programme" in content:  # simple check for <programme> tag
+            return r
+
+    return None
+    
 def get_epg(channels, from_date, days=7, recalculate=True):
 
     result = {}
@@ -83,8 +78,7 @@ def get_epg(channels, from_date, days=7, recalculate=True):
         to_date = from_date + datetime.timedelta(days=days)
 
     # If no EPG or missing channels for some entries, try fetching fallback XMLTV
-    session = requests.Session()
-    resp = session.get(EPG_URL, timeout=10)
+    resp = find_version_with_program()
     if resp.status_code == 200 and resp.text.strip():
         root = ET.fromstring(resp.content)
         # build map of xmltv channel id -> display-name
@@ -106,7 +100,6 @@ def get_epg(channels, from_date, days=7, recalculate=True):
             else:
                 continue
             
-            xbmc.log("EPG ITEM FOUND: id=" + str(target) + ", name=" + str(ids[target]), xbmc.LOGINFO);
             # extract fields
             title_el = prog.find('title')
             desc_el = prog.find('desc')
@@ -133,6 +126,7 @@ def get_epg(channels, from_date, days=7, recalculate=True):
                     result[target] = []
                 result[target].append(item)
 
+    xbmc.log("EPG ITEMS FOUND: " + str(len(result)), xbmc.LOGINFO);
     return result
 
 
