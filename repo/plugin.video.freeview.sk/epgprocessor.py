@@ -16,46 +16,11 @@ from dateutil.tz import tzutc, tzlocal
 sys.path.append(os.path.join (os.path.dirname(__file__), 'resources', 'providers'))
 
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'}
-EPG_GITHUB_OWNER = "370network"
-EPG_GITHUB_REPO = "skylink-xmltv"
-EPG_GITHUB_BRANCH = "main"
-EPG_GITHUB_FILEPATH = "a3b_a1.xml"
+EPG_URL = "https://raw.githubusercontent.com/370network/skylink-xmltv/refs/heads/main/a3b_a1.xml"
 
 def ts(dt):
     return int(time.mktime(dt.timetuple())) * 1000
 
-def find_version_with_program():
-    # Step 1: Get commit history for the file
-    commits_url = f"https://api.github.com/repos/{EPG_GITHUB_OWNER}/{EPG_GITHUB_REPO}/commits"
-    params = {"path": EPG_GITHUB_FILEPATH, "sha": EPG_GITHUB_BRANCH, "per_page": 10}
-    commits = []
-    page = 1
-    
-    session = requests.Session()
-
-    while True:
-        params["page"] = page
-        r = session.get(commits_url, params=params, headers=HEADERS)
-        r.raise_for_status()
-        data = r.json()
-        if not data:
-            break
-        commits.extend(data)
-        page += 1
-
-    # Step 2: Iterate commits from newest to oldest
-    for commit in commits:
-        sha = commit["sha"]
-        raw_url = f"https://raw.githubusercontent.com/{EPG_GITHUB_OWNER}/{EPG_GITHUB_REPO}/{sha}/{EPG_GITHUB_FILEPATH}"
-        r = session.get(raw_url, headers=HEADERS)
-        if r.status_code != 200:
-            continue  # file may not exist in this commit
-        content = r.text
-        if "<programme" in content:  # simple check for <programme> tag
-            return r
-
-    return None
-    
 def get_epg(channels, from_date, days=7, recalculate=True):
 
     result = {}
@@ -77,8 +42,9 @@ def get_epg(channels, from_date, days=7, recalculate=True):
     else:
         to_date = from_date + datetime.timedelta(days=days)
 
-    # If no EPG or missing channels for some entries, try fetching fallback XMLTV
-    resp = find_version_with_program()
+    # Try fetching XMLTV
+    session = requests.Session()
+    resp = session.get(EPG_URL, timeout=10, header=HEADERS)
     if resp.status_code == 200 and resp.text.strip():
         root = ET.fromstring(resp.content)
         # build map of xmltv channel id -> display-name
