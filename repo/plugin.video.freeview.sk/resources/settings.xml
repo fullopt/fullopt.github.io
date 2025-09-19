@@ -8,7 +8,7 @@
     </category>
     <category label="30100">
         <setting label="30101" type="lsep"/>
-        <setting label="30102" type="text" id="mrkzemail" default="c3761381@urhen.com"/>
+        <setting label="30102" type="text" id="mrkzemail" default="iptvft80@gmail.com"/>
         <setting label="30103" type="text" option="hidden" id="mrkzpassword" default="heslo123"/>
     </category>
     <category label="30110">

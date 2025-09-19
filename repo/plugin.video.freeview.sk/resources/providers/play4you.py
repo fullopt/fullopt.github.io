@@ -26,7 +26,6 @@ CHANNELS = {
     'tv2':'910c276218',
     'supertv2':'d33r4zg5z9',
     'filmplusz':'0977afac7c',
-    'euronews':'m3r2g2ku5r',
     
     'bbcnews':'rtz9vnsx8k',
     

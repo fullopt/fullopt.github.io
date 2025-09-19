@@ -138,8 +138,6 @@ plugin://plugin.video.freeview.sk/?provider=play4you&channel=tv2
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=supertv2
 #EXTINF:0 tvg-id="111c6b4640248a8ce9ab7ba22098f252" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/filmplusz.png" tvg-name="Film+",Film+
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=filmplusz
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/euronews.png" tvg-name="EuroNews",EuroNews
-plugin://plugin.video.freeview.sk/?provider=play4you&channel=euronews
 
 #EXTINF:0 tvg-id="a5ed408e790e8b4efd9a0d565584c266" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_uk.png" tvg-name="BBC News",BBC News
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
