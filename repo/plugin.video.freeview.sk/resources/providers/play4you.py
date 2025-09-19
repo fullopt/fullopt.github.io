@@ -19,13 +19,14 @@ BASE_URL = 'https://play4you.icu'
 CHANNELS = {
     'm1':'1b6d437dbd',
     'm2':'1b0d237dbd',
-    'm4sport':'r3a5t0bf0s',
+    'dunaworld':'r3a5t0bf0s',
     'm5':'22a640b1de',
     'rtlklub':'8bb04c766c',
     'rtlii':'k65f4zh4e9',
     'tv2':'910c276218',
     'supertv2':'d33r4zg5z9',
     'filmplusz':'0977afac7c',
+    'euronews':'m3r2g2ku5r',
     
     'bbcnews':'rtz9vnsx8k',
     

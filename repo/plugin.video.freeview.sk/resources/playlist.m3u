@@ -124,8 +124,8 @@ plugin://plugin.video.freeview.sk/?provider=simple&channel=szts
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=m1
 #EXTINF:0 tvg-id="46743aab43fd3cfe1f17948ed9d72143" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/m2.png" tvg-name="M2",M2
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=m2
-#EXTINF:0 tvg-id="229bcf24e81f5b38c7a542d8b4a7c286" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/m4.png" tvg-name="M4 Sport+/Duna World",M4 Sport+/Duna World
-plugin://plugin.video.freeview.sk/?provider=play4you&channel=m4sport
+#EXTINF:0 tvg-id="229bcf24e81f5b38c7a542d8b4a7c286" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/dunaworld.png" tvg-name="Duna World (Sport+)",Duna World (Sport+)
+plugin://plugin.video.freeview.sk/?provider=play4you&channel=dunaworld
 #EXTINF:0 tvg-id="59729431c7976538e2a8c2dd44e59c6a" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/m5.png" tvg-name="M5",M5
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=m5
 #EXTINF:0 tvg-id="124286b9af8aad39e0199ae7c1f765b4" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/rtlklub.png" tvg-name="RTL KLUB",RTL KLUB
@@ -138,6 +138,8 @@ plugin://plugin.video.freeview.sk/?provider=play4you&channel=tv2
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=supertv2
 #EXTINF:0 tvg-id="111c6b4640248a8ce9ab7ba22098f252" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/filmplusz.png" tvg-name="Film+",Film+
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=filmplusz
+#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/euronews.png" tvg-name="EuroNews",EuroNews
+plugin://plugin.video.freeview.sk/?provider=play4you&channel=euronews
 
 #EXTINF:0 tvg-id="a5ed408e790e8b4efd9a0d565584c266" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_uk.png" tvg-name="BBC News",BBC News
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
