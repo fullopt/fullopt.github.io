@@ -44,7 +44,7 @@ def get_epg(channels, from_date, days=7, recalculate=True):
 
     # Try fetching XMLTV
     session = requests.Session()
-    resp = session.get(EPG_URL, timeout=10, header=HEADERS)
+    resp = session.get(EPG_URL, timeout=10, headers=HEADERS)
     if resp.status_code == 200 and resp.text.strip():
         root = ET.fromstring(resp.content)
         # build map of xmltv channel id -> display-name
