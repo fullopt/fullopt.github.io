@@ -47,21 +47,25 @@ def play(_handle, _addon, params):
     session = requests.Session()
     response = session.get(f"{BASE_URL}/e/{CHANNELS[channel]}", headers=HEADERS)
     if response.status_code != 200:
-        raise Exception(f"Krok 1: Nepodarilo sa získat stream: http={response.status_code}")
+        raise Exception(f"{_addon.getLocalizedString(30400)} (1): http={response.status_code}")
     
     match= re.search(r'load\.php\?a=[a-zA-Z0-9]+&b=[a-zA-Z0-9]+&c=', response.text)
     if not match:
-        raise Exception("Krok 2: Nepodarilo sa získat stream")
+        raise Exception(f"{_addon.getLocalizedString(30400)} (2):\nMissing LOAD")
     str_load = match.group(0)
     
     timestamp = int(time.time())
     response = requests.get(f"{BASE_URL}/{str_load}{timestamp}", headers=HEADERS)
     if response.status_code != 200:
-        raise Exception(f"Krok 3: Nepodarilo sa získat stream: http={response.status_code}")
+        raise Exception(f"{_addon.getLocalizedString(30400)} (3): http={response.status_code}")
     
     match = re.search(r'https?://[^\s\'"]*\.m3u8[^\s\'"]*', response.text)
     if not match:
-        raise Exception("Krok 4: Nepodarilo sa získat stream")
+        match = re.search(r'<div\s+class="info".*?>.*?<p>(.*?)</p>.*?</div>', response.text, re.S)
+        if not match:
+            raise Exception(f"{_addon.getLocalizedString(30400)} (4)")
+        else:
+            raise Exception(f"{_addon.getLocalizedString(30400)} (4):\n{match.group(1).strip()}")
     hls = match.group(0)
     
     li = xbmcgui.ListItem(path=hls+'|'+urlencode(HEADERS))

@@ -143,6 +143,10 @@ msgctxt "#30302"
 msgid "Lounge TV využíva Widevine DRM, preto potrebuje addon InputStream Helper."
 msgstr "Lounge TV využíva Widevine DRM, preto potrebuje addon InputStream Helper."
 
+msgctxt "#30400"
+msgid "Sorry, nepodarilo sa mi získať stream"
+msgstr "Sorry, nepodarilo sa mi získať stream"
+
 msgctxt "#30900"
 msgid "Playlist bol skopírovaný"
 msgstr "Playlist bol skopírovaný"
