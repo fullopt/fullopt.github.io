@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.freeview.sk" version="2.2.5" name="freeview.sk" provider-name="cache-sk / fullopt">
+<addon id="plugin.video.freeview.sk" version="2.2.6" name="freeview.sk" provider-name="cache-sk / fullopt">
     <requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.beautifulsoup4"/>
@@ -21,6 +21,8 @@
             <icon>icon.jpg</icon>
         </assets>
         <news>
+[B]2.2.6[/B]
+- Opravene EPG ID
 [B]2.2.5[/B]
 - Film+ Hungary - spravne EPG
 [B]2.2.4[/B]
