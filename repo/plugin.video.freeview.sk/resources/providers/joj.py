@@ -18,9 +18,9 @@ except ImportError:
     from urllib.parse import quote
 
 CHANNELS = {
-    'joj':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'with':'joj.m3u8'},
-    'plus':{'base':'https://plus.joj.sk/live', 'iframe':'https://media.joj.sk/', 'fget':False, 'with':'plus.m3u8'},
-    'wau':{'base':'https://wau.joj.sk/live', 'iframe':'https://media.joj.sk/', 'fget':False, 'with':'wau.m3u8'},
+    'joj':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj.m3u8'},
+    'plus':{'base':'https://plus.joj.sk/live', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'plus.m3u8'},
+    'wau':{'base':'https://wau.joj.sk/live', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'wau.m3u8'},
     'family':{'base':'https://jojfamily.blesk.cz/live', 'iframe':'https://media.joj.sk/', 'fget':True},
     'joj24':{'base':'https://joj24.noviny.sk/', 'iframe':'https://media.joj.sk/', 'fget':False, 'with':'joj_news.m3u8'},
     'jojko':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'jojko.m3u8'},

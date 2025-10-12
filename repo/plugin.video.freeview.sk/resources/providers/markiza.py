@@ -48,7 +48,7 @@ def play(_handle, _addon, params):
     session = requests.Session()
     headers = {}
     headers.update(HEADERS)
-    response = session.get(BASE, headers=headers)
+    response = session.get(BASE, headers=headers, verify=False)
     content = response.text
     
     matches = re.search('<input type="hidden" name="_do" value="(.+)-loginForm-(.+)">', content)
@@ -69,7 +69,7 @@ def play(_handle, _addon, params):
     if response.status_code != 302:
         return brexit(_addon, _handle, 'forward')
 
-    response = session.get(CHANNELS[channel], headers=headers)
+    response = session.get(CHANNELS[channel], headers=headers, verify=False)
     content = response.text
     
     matches = re.search('<iframe.*?data-src="([^"]+)".*?allowfullscreen.*</iframe>', content, re.DOTALL)
@@ -80,7 +80,7 @@ def play(_handle, _addon, params):
 
     headers.update({'Referer':CHANNELS[channel]})
     
-    response = session.get(iframe, headers=headers)
+    response = session.get(iframe, headers=headers, verify=False)
     
     content = response.content
     try:
