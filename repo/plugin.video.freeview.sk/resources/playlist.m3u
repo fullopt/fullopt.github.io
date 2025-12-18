@@ -22,6 +22,8 @@ plugin://plugin.video.freeview.sk/?provider=joj&channel=wau
 #EXTINF:0 tvg-id="eacbd3c220de39cfa7c855755d1291cf" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/jojsport.png" tvg-name="JOJ Šport",JOJ Šport
 plugin://plugin.video.freeview.sk/?provider=joj&channel=jojsport
 #EXTINF:0 tvg-id="51a4aa5b11a599bba6bef82db96652a0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/family.png" tvg-name="JOJ Family",JOJ Family
+plugin://plugin.video.freeview.sk/?provider=joj&channel=jojsport2
+#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/jojsport2.png" tvg-name="JOJ Family",JOJ Family
 plugin://plugin.video.freeview.sk/?provider=joj&channel=family
 #EXTINF:0 tvg-id="c562602b114a9614998fbb29142f4017" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/jojko.png" tvg-name="Jojko",Jojko
 plugin://plugin.video.freeview.sk/?provider=joj&channel=jojko

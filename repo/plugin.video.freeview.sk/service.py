@@ -63,9 +63,6 @@ class EpgMonitor(xbmc.Monitor):
         if not gse:
             return False
 
-        # self.notify("Generovanie EPG je momentalne nefunkcne")  # commented out by patch to enable EPG generation
-        #return False
-
         _playlist = 'special://home/addons/'+self._addon.getAddonInfo('id')+'/resources/playlist.m3u'
         if not os.path.exists(self._profile):
             os.makedirs(self._profile)

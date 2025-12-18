@@ -46,9 +46,10 @@ def play(_handle, _addon, params):
     password = xbmcplugin.getSetting(_handle, 'mrkzpassword')
 
     session = requests.Session()
+    session.verify = False
     headers = {}
     headers.update(HEADERS)
-    response = session.get(BASE, headers=headers, verify=False)
+    response = session.get(BASE, headers=headers)
     content = response.text
     
     matches = re.search('<input type="hidden" name="_do" value="(.+)-loginForm-(.+)">', content)
@@ -69,7 +70,7 @@ def play(_handle, _addon, params):
     if response.status_code != 302:
         return brexit(_addon, _handle, 'forward')
 
-    response = session.get(CHANNELS[channel], headers=headers, verify=False)
+    response = session.get(CHANNELS[channel], headers=headers)
     content = response.text
     
     matches = re.search('<iframe.*?data-src="([^"]+)".*?allowfullscreen.*</iframe>', content, re.DOTALL)
@@ -80,7 +81,7 @@ def play(_handle, _addon, params):
 
     headers.update({'Referer':CHANNELS[channel]})
     
-    response = session.get(iframe, headers=headers, verify=False)
+    response = session.get(iframe, headers=headers)
     
     content = response.content
     try:

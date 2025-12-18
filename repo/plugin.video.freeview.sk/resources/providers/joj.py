@@ -28,7 +28,8 @@ CHANNELS = {
     'csfilm':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cs_film.m3u8'},
     'cshistory':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cs_history.m3u8'},
     'csmystery':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cs_mystery.m3u8'},
-    'jojsport':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj_sport.m3u8'}
+    'jojsport':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj_sport.m3u8'},
+    'jojsport2':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj_sport2.m3u8'}
 }
 
 FALLBACK = "https://live.cdn.joj.sk/live/%%?loc=SK&exp=1716281798&hash=9d0862c9645f8f9ffd8736a3e732735333d1b1b665c1a9bf3db84bc8b10c0038"
@@ -124,9 +125,9 @@ def play(_handle, _addon, params):
     uheaders = urlencode(data['headers'])
     
     li = xbmcgui.ListItem(path=data['url']+'|'+uheaders)
-    li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-    li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-    li.setProperty('inputstream.adaptive.stream_headers', uheaders)
-    li.setProperty('inputstream.adaptive.manifest_headers', uheaders)
-    li.setProperty('inputstream.adaptive.manifest_type',data['manifest'])
+    li.setProperty('inputstreamaddon','inputstream.ffmpegdirect') #kodi 18
+    li.setProperty('inputstream', 'inputstream.ffmpegdirect')
+    li.setProperty('inputstream.ffmpegdirect.manifest_headers', uheaders)
+    li.setProperty('inputstream.ffmpegdirect.stream_headers', uheaders)
+    li.setProperty('inputstream.ffmpegdirect.manifest_type',data['manifest'])
     xbmcplugin.setResolvedUrl(_handle, True, li)
