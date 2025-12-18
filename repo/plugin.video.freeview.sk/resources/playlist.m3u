@@ -33,7 +33,7 @@ plugin://plugin.video.freeview.sk/?provider=joj&channel=joj24
 plugin://plugin.video.freeview.sk/?provider=joj&channel=jojcinema
 #EXTINF:0 tvg-id="86ec1b1ab37b8e6a39e7fe7852cc2761" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/jojsvet.png" tvg-name="JOJ Svet",JOJ Svet
 #plugin://plugin.video.freeview.sk/?provider=joj&channel=jojsvet
-#EXTINF:0 tvg-id="b0332f49a9a90cec16004603891e7d5c" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/csfilm.png" tvg-name="CS Film",CS Film
+#EXTINF:0 tvg-id="e3690b8f5892f1e960df1a54902cc848" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/csfilm.png" tvg-name="CS Film",CS Film
 plugin://plugin.video.freeview.sk/?provider=joj&channel=csfilm
 #EXTINF:0 tvg-id="e960740fb6ac73b8b55d7767af74aef9" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/cshistory.png" tvg-name="CS History",CS History
 plugin://plugin.video.freeview.sk/?provider=joj&channel=cshistory
@@ -47,7 +47,7 @@ plugin://plugin.video.freeview.sk/?provider=markiza&channel=doma
 plugin://plugin.video.freeview.sk/?provider=markiza&channel=dajto
 #EXTINF:0 tvg-id="aa3d3d3842d31ad8771ae3c0b9c36b93" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/krimi.png" tvg-name="Krimi",Krimi
 plugin://plugin.video.freeview.sk/?provider=markiza&channel=krimi
-#EXTINF:0 tvg-id="a1579a6de43cb6d93b7dc6d784bb1e82" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/klasik.png" tvg-name="Klasik",Klasik
+#EXTINF:0 tvg-id="3bfc51074799dc287b11188784cad123" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/klasik.png" tvg-name="Klasik",Klasik
 plugin://plugin.video.freeview.sk/?provider=markiza&channel=klasik
 #EXTINF:0 tvg-id="76ec128b489da6c0e8b34681cba69914" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/ta3.png" tvg-name="TA3",TA3
 plugin://plugin.video.freeview.sk/?provider=ta3&channel=ta3
@@ -126,7 +126,7 @@ plugin://plugin.video.freeview.sk/?provider=simple&channel=szts
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=m1
 #EXTINF:0 tvg-id="46743aab43fd3cfe1f17948ed9d72143" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/m2.png" tvg-name="M2",M2
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=m2
-#EXTINF:0 tvg-id="229bcf24e81f5b38c7a542d8b4a7c286" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/dunaworld.png" tvg-name="Duna World (Sport+)",Duna World (Sport+)
+#EXTINF:0 tvg-id="69b9a29698ec0b4c31a096fce73d73bb" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/dunaworld.png" tvg-name="Duna World (Sport+)",Duna World (Sport+)
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=dunaworld
 #EXTINF:0 tvg-id="59729431c7976538e2a8c2dd44e59c6a" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/m5.png" tvg-name="M5",M5
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=m5
