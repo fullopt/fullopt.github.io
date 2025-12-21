@@ -153,7 +153,9 @@ plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="TVS Music",TVS Music
 #plugin://plugin.video.freeview.sk/?provider=play4you&channel=tvsmusic
 
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="WildEarth",WildEarth
-plugin://plugin.video.freeview.sk/?provider=play4you&channel=wildearth
+#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="National Geographic",National Geographic
+plugin://plugin.video.freeview.sk/?provider=play4you&channel=natgeo
+#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="National Geographic Wild",National Geographic Wild
+plugin://plugin.video.freeview.sk/?provider=play4you&channel=natgeowild
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="BabyShark TV",BabyShark TV
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=babysharktv

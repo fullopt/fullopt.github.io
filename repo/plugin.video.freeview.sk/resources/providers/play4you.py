@@ -33,7 +33,8 @@ CHANNELS = {
     # 'tvscomedy':'f4j7cvhulz',
     # 'tvsfamily':'k1830tnprs',
     # 'tvsmusic':'amnf5x08vy',
-    'wildearth':'6upbqu3pnoes',
+    'natgeo':'96xr2tdn2pcs',
+    'natgeowild':'6upbqu3pnoes',
     'babysharktv':'zjfc0unr8dki'
 }
 
