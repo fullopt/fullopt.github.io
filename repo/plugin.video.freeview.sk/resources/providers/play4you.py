@@ -17,15 +17,15 @@ except ImportError:
 
 BASE_URL = 'https://play4you.icu'
 CHANNELS = {
-    'm1':'1b6d437dbd',
-    'm2':'1b0d237dbd',
-    'dunaworld':'r3a5t0bf0s',
-    'm5':'22a640b1de',
-    'rtlklub':'8bb04c766c',
-    'rtlii':'k65f4zh4e9',
-    'tv2':'910c276218',
-    'supertv2':'d33r4zg5z9',
-    'filmplusz':'0977afac7c',
+    'm1':'a21b6d437dbd',
+    'm2':'u71b0d237dbd',
+    'dunaworld':'f2r3a5t0bf0s',
+    'm5':'h722a640b1de',
+    'rtlklub':'x38bb04c766c',
+    'rtlii':'k1k65f4zh4e9',
+    'tv2':'g5910c276218',
+    'supertv2':'0dd33r4zg5z9',
+    'filmplusz':'r40977afac7c',
     
     'bbcnews':'rtz9vnsx8k',
     
@@ -33,8 +33,8 @@ CHANNELS = {
     # 'tvscomedy':'f4j7cvhulz',
     # 'tvsfamily':'k1830tnprs',
     # 'tvsmusic':'amnf5x08vy',
-    'wildearth':'9ylw7deu0k',
-    'babysharktv':'zbutpgh520'
+    'wildearth':'6upbqu3pnoes',
+    'babysharktv':'zjfc0unr8dki'
 }
 
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'Referer': BASE_URL}
@@ -63,7 +63,7 @@ def play(_handle, _addon, params):
     if not match:
         match = re.search(r'<div\s+class="info".*?>.*?<p>(.*?)</p>.*?</div>', response.text, re.S)
         if not match:
-            raise Exception(f"{_addon.getLocalizedString(30400)} (4)")
+            raise Exception(f"{_addon.getLocalizedString(30400)} (4):\nNo info")
         else:
             raise Exception(f"{_addon.getLocalizedString(30400)} (4):\n{match.group(1).strip()}")
     hls = match.group(0)
