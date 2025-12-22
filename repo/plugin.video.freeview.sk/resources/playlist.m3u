@@ -144,15 +144,10 @@ plugin://plugin.video.freeview.sk/?provider=play4you&channel=filmplusz
 #EXTINF:0 tvg-id="a5ed408e790e8b4efd9a0d565584c266" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_uk.png" tvg-name="BBC News",BBC News
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
 
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="Fox News",Fox News
-#plugin://plugin.video.freeview.sk/?provider=play4you&channel=foxnews
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="TVS Comedy",TVS Comedy
-#plugin://plugin.video.freeview.sk/?provider=play4you&channel=tvscomedy
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="TVS Family",TVS Family
-#plugin://plugin.video.freeview.sk/?provider=play4you&channel=tvsfamily
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="TVS Music",TVS Music
-#plugin://plugin.video.freeview.sk/?provider=play4you&channel=tvsmusic
-
+#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="Comedy Central",Comedy Central
+plugin://plugin.video.freeview.sk/?provider=play4you&channel=comedycentral
+#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="Comedy TV",Comedy TV
+plugin://plugin.video.freeview.sk/?provider=play4you&channel=comedytv
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="National Geographic",National Geographic
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=natgeo
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="National Geographic Wild",National Geographic Wild

@@ -27,12 +27,10 @@ CHANNELS = {
     'supertv2':'0dd33r4zg5z9',
     'filmplusz':'r40977afac7c',
     
-    'bbcnews':'rtz9vnsx8k',
+    'bbcnews':'fkz3jbmhs7qr',
     
-    # 'foxnews':'8egpa53inu',
-    # 'tvscomedy':'f4j7cvhulz',
-    # 'tvsfamily':'k1830tnprs',
-    # 'tvsmusic':'amnf5x08vy',
+    'comedycentral':'fgro15rvvyjz',
+    'comedytv':'7q1iy472cgbe',
     'natgeo':'96xr2tdn2pcs',
     'natgeowild':'6upbqu3pnoes',
     'babysharktv':'zjfc0unr8dki'
