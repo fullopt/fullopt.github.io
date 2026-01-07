@@ -17,7 +17,7 @@
             <fanart>fanart.jpg</fanart>
         </assets>
     </extension>
-</addon><addon id="plugin.video.freeview.sk" version="2.2.14" name="freeview.sk" provider-name="cache-sk / fullopt">
+</addon><addon id="plugin.video.freeview.sk" version="2.2.15" name="freeview.sk" provider-name="cache-sk / fullopt">
     <requires>
         <import addon="script.module.requests" />
         <import addon="script.module.beautifulsoup4" />
@@ -39,6 +39,8 @@
             <icon>icon.jpg</icon>
         </assets>
         <news>
+[B]2.2.14[/B]
+- play4You ma novu domenu
 [B]2.2.14[/B]
 - BBC a Comedy
 [B]2.2.13[/B]
