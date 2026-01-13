@@ -15,7 +15,7 @@ except ImportError:
     from urllib.parse import urlencode
 
 
-BASE_URL = 'https://play4you.livestreamlinks.net'
+BASE_URL = 'https://https://play4you.top'
 CHANNELS = {
     'm1':'a21b6d437dbd',
     'm2':'u71b0d237dbd',
