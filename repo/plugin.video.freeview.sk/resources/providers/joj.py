@@ -6,128 +6,83 @@
 import xbmcgui
 import xbmcplugin
 import requests.cookies
-from bs4 import BeautifulSoup
-import re
-import random
 
 try:
-    from urllib import urlencode
-    from urllib import quote
+    from urllib import urlencode, quote
 except ImportError:
-    from urllib.parse import urlencode
-    from urllib.parse import quote
+    from urllib.parse import urlencode, quote
 
+from utils import setup_adaptive
+    
 CHANNELS = {
-    'joj':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj.m3u8'},
-    'plus':{'base':'https://plus.joj.sk/live', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'plus.m3u8'},
-    'wau':{'base':'https://wau.joj.sk/live', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'wau.m3u8'},
-    'family':{'base':'https://jojfamily.blesk.cz/live', 'iframe':'https://media.joj.sk/', 'fget':True},
-    'joj24':{'base':'https://joj24.noviny.sk/', 'iframe':'https://media.joj.sk/', 'fget':False, 'with':'joj_news.m3u8'},
-    'jojko':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'jojko.m3u8'},
-    'jojcinema':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cinema.m3u8'},
-    'csfilm':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cs_film.m3u8'},
-    'cshistory':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cs_history.m3u8'},
-    'csmystery':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'cs_mystery.m3u8'},
-    'jojsport':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj_sport.m3u8'},
-    'jojsport2':{'base':'https://live.joj.sk', 'iframe':'https://media.joj.sk/', 'fget':False, 'replace':'joj.m3u8','with':'joj_sport2.m3u8'}
+    'joj':{'id':'LYyAwEjjqmj8kMY23Lqw', 'hls':'joj.m3u8'},
+    'plus':{'id':'60K9GwR6CLApIHVyNYOj', 'hls':'plus.m3u8'},
+    'wau':{'id':'0D9v2CuujVAlLJJTyLWd', 'hls':'wau.m3u8'},
+    'family':{'hls':'family.m3u8'},
+    'joj24':{'id':'7tl6We5FhLyCfZcmSG6F', 'hls':'joj_news.m3u8'},
+    'jojko':{'hls':'jojko.m3u8'},
+    'jojcinema':{'hls':'cinema.m3u8'},
+    'csfilm':{'hls':'cs_film.m3u8'},
+    'cshistory':{'hls':'cs_history.m3u8'},
+    'csmystery':{'hls':'cs_mystery.m3u8'},
+    'jojsport':{'hls':'joj_sport.m3u8'},
+    'jojsport2':{'hls':'joj_sport2.m3u8'}
 }
 
-FALLBACK = "https://live.cdn.joj.sk/live/%%?loc=SK&exp=1716281798&hash=9d0862c9645f8f9ffd8736a3e732735333d1b1b665c1a9bf3db84bc8b10c0038"
+PAYLOAD = {
+    "data": {
+        "id":"",
+        "documentType":"tvChannel",
+        "sourceHistory":[],
+        "capabilities":[
+            {"codec":"h264","protocol":"dash","encryption":"none"},
+            {"codec":"h264","protocol":"hls","encryption":"none"}
+        ]
+    }
+}
 
-FGET = "http://p.xf.cz/fget.php?url="
+SOURCE = "https://europe-west3-tivio-production.cloudfunctions.net/getSourceUrl"
+FALLBACK = "https://live.cdn.joj.sk/live/"
 
-HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
+HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'Referer': 'https://www.joj.sk/'}
 
 def brexit(_addon, _handle, word):
     xbmcgui.Dialog().ok(_addon.getAddonInfo('name'), _addon.getLocalizedString(30105) + word)
     xbmcplugin.setResolvedUrl(_handle, False, xbmcgui.ListItem())
     return False
-
-def playFromPage(_handle, _addon, channel):
-    jojsport = channel == 'jojsport'
-    channel = CHANNELS[channel]
-    if "direct" in channel:
-        hls = channel["direct"]
-        headers = HEADERS
-    else:
-        session = requests.Session()
-        if channel['fget']:
-            # temporary
-            session.verify = False
-        headers = {}
-        headers.update(HEADERS)
-        response = session.get(channel['base'], headers=headers)
-        html = BeautifulSoup(response.content, features="html.parser")
-        
-        player = None
-        items = html.find_all('iframe',{},True)
-        if len(items) > 0:
-            for iframe in items:
-                if channel['iframe'] in iframe['src']:
-                    player = iframe['src']
-                    break
-        else:
-            return brexit(_addon, _handle, 'iframe')
-
-        if player is None:
-            print("freeview: joj - player not found")
-            if 'replace' not in channel:
-                # temporary test iihf
-                chName = findIIHF(html)
-                if chName is not None:
-                    try:
-                        iihf = getIIHF(IIHF+chName)
-                        if iihf is not None:
-                            return iihf
-                    except: 
-                        pass
-            # try fallback
-            if 'with' in channel:
-                print("freeview: joj - fallback applied")
-                hls = FALLBACK.replace("%%", channel['with'])
-                headers = {'Referer':channel['iframe'], 'Origin':channel['iframe']}
-                headers.update(HEADERS)
-                return {'url':hls, 'manifest':'hls', 'headers':headers}
-            else:
-                return brexit(_addon, _handle, 'iframe')
-            
-        if channel['fget']:
-            #TODO - sooo lazy..
-            response = session.get(FGET+quote(player), headers=headers)
-        else:
-            headers = {'Referer':channel['base']}
+    
+def getSource(channel):
+    if 'id' in channel:
+        try: 
+            session = requests.Session()
+            headers = {"Content-Type": "application/json"}
             headers.update(HEADERS)
-            response = session.get(player, headers=headers)
-        
-        content = response.content
-        try:
-            content = content.decode('utf-8')
-        except AttributeError:
+            PAYLOAD['data']['id'] = channel['id']
+            response = session.post(SOURCE, json=PAYLOAD, headers=headers)
+            response.raise_for_status()
+            data = response.json()
+            url = data['result']['url']
+            manifest = 'mpd' if url.endswith('.mpd') else 'hls'
+            return {'url': url, 'manifest': manifest, 'headers': HEADERS, 'adaptive': True}
+        except Exception as e:
+            #TODO log?
             pass
-        matches = re.search('"hls": "(.*)"', content)
-        hls = matches.group(1)
-        
-        if 'replace' in channel and 'with' in channel:
-            hls = hls.replace(channel['replace'], channel['with'])
-        
-        headers = {'Referer':channel['iframe'], 'Origin':channel['iframe']}
-        headers.update(HEADERS)
-
-    return {'url':hls, 'manifest':'hls', 'headers':headers}
+    # fallback
+    return {'url': FALLBACK + channel['hls'], 'manifest':'hls', 'headers': HEADERS, 'adaptive': False}
 
 def play(_handle, _addon, params):
     channel = params['channel']
     if not channel in CHANNELS:
         raise #TODO
 
-    data = playFromPage(_handle, _addon, channel)
+    data = getSource(CHANNELS[channel])
     
     uheaders = urlencode(data['headers'])
     
-    li = xbmcgui.ListItem(path=data['url']+'|'+uheaders)
-    li.setProperty('inputstreamaddon','inputstream.ffmpegdirect') #kodi 18
-    li.setProperty('inputstream', 'inputstream.ffmpegdirect')
-    li.setProperty('inputstream.ffmpegdirect.manifest_headers', uheaders)
-    li.setProperty('inputstream.ffmpegdirect.stream_headers', uheaders)
-    li.setProperty('inputstream.ffmpegdirect.manifest_type',data['manifest'])
+    if data['adaptive']:
+        li = xbmcgui.ListItem(path=data['url'])
+        setup_adaptive(li, uheaders, data['manifest'])
+    else:
+        li = xbmcgui.ListItem(path=data['url']+'|'+uheaders)
+
     xbmcplugin.setResolvedUrl(_handle, True, li)

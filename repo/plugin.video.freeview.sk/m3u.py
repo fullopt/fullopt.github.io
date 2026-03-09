@@ -6,7 +6,7 @@
 
 import re
 
-m3u_regex = '(.+?),(.+)\s*(.+)\s*'
+m3u_regex = '(#EXTINF.*),(.*)\s*\r?\n\s*(.+)\s*'
 name_regex = '.*?tvg-name=[\'"](.*?)[\'"]'
 group_regex = '.*?group-title=[\'"](.*?)[\'"]'
 logo_regex = '.*?tvg-logo=[\'"](.*?)[\'"]'
@@ -50,12 +50,10 @@ def process(m3u):
         }
 
         channels.append(channelData)
-
   return channels
 
 def regParse(parser, data):
   foundString = parser.search(data)
   if foundString:
-    #print "regParse result", x.group(1)
     return foundString.group(1).strip()
   return None

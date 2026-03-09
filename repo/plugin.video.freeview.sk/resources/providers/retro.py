@@ -5,53 +5,38 @@
 
 import xbmcgui
 import xbmcplugin
+import requests.cookies
+import re
 
 try:
     from urllib import urlencode
 except ImportError:
     from urllib.parse import urlencode
 
-import m3u8
-
-
-CHANNELS = {
-    'retro':{'path':'http://stream.mediawork.cz/retrotv/smil:retrotv2.smil/','playlist':'playlist.m3u8'}
-}
-
-ALTERNATIVE = {
-    'retro':{'path':'http://stream.mediawork.cz/retrotv/retrotvHQ1/','playlist':'playlist.m3u8'} 
-}
-
-
+from utils import setup_adaptive
 
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
 
+def brexit(_addon, _handle, word):
+    xbmcgui.Dialog().ok(_addon.getAddonInfo('name'), _addon.getLocalizedString(30105) + word)
+    xbmcplugin.setResolvedUrl(_handle, False, xbmcgui.ListItem())
+    return False
+
 def play(_handle, _addon, params):
-    channel = params['channel']
-    if not channel in CHANNELS:
-        raise #TODO
 
-    parse_playlist = xbmcplugin.getSetting(_handle, 'retroparse') == 'true'
-    alternative = xbmcplugin.getSetting(_handle, 'retroalt') == 'true'
+    session = requests.Session()
+    session.verify = False
+    headers = {}
+    headers.update(HEADERS)
+    response = session.get("https://retromusic.cz/", headers=headers)
+    content = response.text
 
-    channel = ALTERNATIVE[channel] if alternative and channel in ALTERNATIVE else CHANNELS[channel]
-
-    if parse_playlist:
-        best = None
-        streams = m3u8.load(channel['path'] + channel['playlist'], headers=HEADERS)
-        for stream in streams.playlists:
-            if best is None:
-                best = stream
-            else:
-                if stream.stream_info.bandwidth > best.stream_info.bandwidth:
-                    best = stream
-        li = xbmcgui.ListItem(path=channel['path']+best.uri+'|'+urlencode(HEADERS))
-        xbmcplugin.setResolvedUrl(_handle, True, li)
+    matches = re.search('file: "(.+)",', content)
+    if bool(matches):
+        playlist = matches.group(1)
     else:
-        li = xbmcgui.ListItem(path=channel['path']+channel['playlist']+'|'+urlencode(HEADERS))
-        li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-        li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-        li.setProperty('inputstream.adaptive.manifest_type','hls')
-        xbmcplugin.setResolvedUrl(_handle, True, li)
+        return brexit(_addon, _handle, 'do')
 
-
+    li = xbmcgui.ListItem(path=playlist)
+    setup_adaptive(li, None, 'hls')
+    xbmcplugin.setResolvedUrl(_handle, True, li)

@@ -11,6 +11,7 @@ import requests
 import xml.etree.ElementTree as ET
 import datetime
 
+from utils import setup_adaptive
 
 API = 'https://api.ceskatelevize.cz/video/v1/playlist-live/v1/stream-data/channel/'
 PARAMS = { 'canPlayDrm':'false', 'streamType':'hls', 'quality':'web', 'maxQualityCount':'5' }
@@ -83,9 +84,7 @@ def play(_handle, _addon, params):
     data = response.json()
     if 'streamUrls' in data and data['streamUrls'] and 'main' in data['streamUrls'] and data['streamUrls']['main']:
         li = xbmcgui.ListItem(path=data['streamUrls']['main'])
-        li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-        li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-        li.setProperty('inputstream.adaptive.manifest_type','hls')
+        setup_adaptive(li, None, 'hls')
         xbmcplugin.setResolvedUrl(_handle, True, li)
     else:
         raise #TODO

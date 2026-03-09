@@ -12,6 +12,7 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
+from utils import setup_adaptive
 
 CHANNELS = {
     'ta3':'https://embed.livebox.cz/ta3_v2/live-source.js'
@@ -43,9 +44,7 @@ def play(_handle, _addon, params):
     if src.startswith('//'):
         src = 'https:' + src
 
-    li = xbmcgui.ListItem(path=src+'|'+urlencode(HEADERS))
-    li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-    li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-    li.setProperty('inputstream.adaptive.manifest_type','hls')
+    li = xbmcgui.ListItem(path=src)
+    setup_adaptive(li, urlencode(HEADERS), 'hls')
     xbmcplugin.setResolvedUrl(_handle, True, li)
 

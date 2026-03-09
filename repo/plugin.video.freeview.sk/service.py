@@ -67,21 +67,11 @@ class EpgMonitor(xbmc.Monitor):
         if not os.path.exists(self._profile):
             os.makedirs(self._profile)
             
-        workpath = os.path.join(self._profile, get_random_string(8) + 'work.epg.xml')
-        path = os.path.join(self._profile, 'epg.xml')
-
         with io.open(translatePath(_playlist), 'r', encoding='utf8') as file:
             m3u_data = file.read()
             file.close()    
         channels = m3u.process(m3u_data)
-        now = datetime.datetime.now()
-        epg = epgprocessor.get_epg(channels, now, int(self._addon.getSetting('gen_days')))
-        epgprocessor.generate_xmltv(channels,epg,workpath)
-        if os.path.isfile(path):
-            os.unlink(path)
-        os.rename(workpath, path)
-
-        return True
+        return epgprocessor.update_epg(channels)
 
     def tick(self):
         if datetime.datetime.now() > self._next_update:

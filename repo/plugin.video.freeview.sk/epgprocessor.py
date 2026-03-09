@@ -1,186 +1,218 @@
 # -*- coding: utf-8 -*-
+# Module: epgprocessor
 # Author: cache-sk
-# Created on: 18.11.2019
-# License: AGPL v.3 https://www.gnu.org/licenses/agpl-3.0.html
+# Modified by: cratos38
+# License: MIT https://opensource.org/licenses/MIT
 
-import io
 import os
-import sys
-import requests
-import datetime
-import time
-import xbmc
+import gzip
 import xml.etree.ElementTree as ET
-from dateutil.tz import tzutc, tzlocal
+from datetime import datetime
+import xbmc
+import xbmcaddon
+import xbmcvfs
+import traceback
+import requests.cookies
 
-sys.path.append(os.path.join (os.path.dirname(__file__), 'resources', 'providers'))
-
-HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'}
-EPG_URL = "https://raw.githubusercontent.com/370network/skylink-xmltv/refs/heads/main/a3b_a1.xml"
-
-def ts(dt):
-    return int(time.mktime(dt.timetuple())) * 1000
-
-def get_epg(channels, from_date, days=7, recalculate=True):
-
-    result = {}
-
-    ids = {}
-    for channel in channels:
-        if channel['id'].isnumeric():
-            if u'0' != channel['id']:
-                # non zero number = skylink id
-                ids[channel['id']] = channel['name']
-        else:
-            ids[channel['id']] = channel['name']
-
-    xbmc.log("EPG CHANNELS: " + str(ids), xbmc.LOGINFO);
-
-    if recalculate:
-        from_date = from_date.replace(hour=0, minute=0, second=0, microsecond=0).replace(tzinfo=datetime.timezone.utc)
-        to_date = from_date + datetime.timedelta(days=days)
-    else:
-        to_date = from_date + datetime.timedelta(days=days)
-
-    # Try fetching XMLTV
-    session = requests.Session()
-    resp = session.get(EPG_URL, timeout=10, headers=HEADERS)
-    if resp.status_code == 200 and resp.text.strip():
-        root = ET.fromstring(resp.content)
-        # build map of xmltv channel id -> display-name
-        xml_channels = {}
-        for ch in root.findall('channel'):
-            id = ch.get('id')
-            name = ch.find('display-name')
-            if name is not None:
-                xml_channels[id] = name.text.strip()
-            else:
-                xml_channels[id] = id
-        # parse programmes
-        for prog in root.findall('programme'):
-            chref = prog.get('channel')
-            # decide target channel id in addon
-            target = None
-            if chref in ids:
-                target = chref
-            else:
-                continue
-            
-            # extract fields
-            title_el = prog.find('title')
-            desc_el = prog.find('desc')
-            start = prog.get('start')
-            stop = prog.get('stop')
-            
-            # xmltv times are YYYYMMDDHHMMSS +/-HHMM, handle basic case
-            fmt = '%Y%m%d%H%M%S%z' if len(start) > 14 else '%Y%m%d%H%M%S'
-            dt_start = datetime.datetime.strptime(start.replace(' ', ''), fmt).astimezone(datetime.timezone.utc)
-            fmt = '%Y%m%d%H%M%S%z' if len(stop) > 14 else '%Y%m%d%H%M%S'
-            dt_stop = datetime.datetime.strptime(stop.replace(' ', ''), fmt).astimezone(datetime.timezone.utc)
-
-            if dt_start >= from_date and dt_start <= to_date:
-                item = {}
-                if title_el is not None and title_el.text:
-                    item['title'] = title_el.text.strip()
-                if desc_el is not None and desc_el.text:
-                    item['description'] = desc_el.text.strip()
-                if dt_start is not None and dt_stop is not None:
-                    item['dtstart'] = dt_start
-                    item['dtend'] = dt_stop
-                # append to result
-                if target not in result:
-                    result[target] = []
-                result[target].append(item)
-
-    xbmc.log("EPG ITEMS FOUND: " + str(len(result)), xbmc.LOGINFO);
-    return result
-
-
-def generate_plot(epg, now, chtitle, items_left = 3):
-
-    def get_plot_line(start, title):
-        time = start.strftime('%H:%M')
-        try:
-            time = time.decode('UTF-8')
-        except AttributeError:
-            pass
-        return '[B]' + time + '[/B] ' + title + '[CR]'
-
-    plot = u''
-    nowutc = now.replace(tzinfo=tzlocal())
-    tomorrowutc = nowutc + datetime.timedelta(days=1)
-    for program in epg:
-        start = now
-        if 'start' in program and program['start']:
-            start = datetime.datetime.utcfromtimestamp(program['start']).replace(tzinfo=tzutc()).astimezone(tzlocal())
-        else:
-            start = program['dtstart'].astimezone(tzlocal())
-        
-        show_item = False
-        if 'duration' in program and program['duration']:
-            show_item = start + datetime.timedelta(minutes=program['duration']) > nowutc
-        else:
-            show_item = program['dtend'] > nowutc and len(plot) == 0 and program['dtstart'] < tomorrowutc
-        
-        if show_item:
-            plot += get_plot_line(start, program['title'] if 'title' in program else chtitle)
-            items_left -= 1
-            if items_left == 0:
-                break
-
-    plot = plot[:-4]
-    return plot
-
-html_escape_table = {
-    "&": "&amp;",
-    '"': "&quot;",
-    "'": "&apos;",
-    ">": "&gt;",
-    "<": "&lt;",
-}
-
-
-def html_escape(text):
-    if text is not None:
-        return "".join(html_escape_table.get(c, c) for c in text)
-    return ""
+try:
+    from xbmc import translatePath
+except ImportError:
+    from xbmcvfs import translatePath
     
-def generate_xmltv(channels, epg, path):
-    now = datetime.datetime.now()
-    with io.open(path, 'w', encoding='utf8') as file:
-        file.write(u'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n')
-        file.write(u'<tv>\n')
+EPG_URL = 'https://iptv-epg.org/files/epg-cz.xml.gz'
+HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'}
+
+_addon = xbmcaddon.Addon()
+_addon_path = translatePath(_addon.getAddonInfo('profile'))
+
+try:
+    unicode  # Python 2
+    PY2 = True
+except NameError:
+    PY2 = False
+
+def log(msg):
+    """Log messages to Kodi log"""
+    if PY2:
+        try:
+            msg = msg.encode('utf-8')
+        except:
+            pass
+    xbmc.log('[FREEVIEW EPG] %s' % msg, xbmc.LOGINFO)
+
+def download_epg():
+    """
+    Download EPG data from iptv-epg.org
+    Returns: Path to downloaded file or None if failed
+    """
+
+    log(u'Downloading EPG from: %s' % EPG_URL)
+    
+    epg_file = os.path.join(_addon_path, 'epg-cz.xml.gz')
+
+    
+
+    try:
+        session = requests.Session()
+        r = session.get(EPG_URL, headers=HEADERS, stream=True, allow_redirects=True)
+        r.raise_for_status()
+
+        with open(epg_file, "wb") as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                if chunk:
+                    f.write(chunk)
+    
+        log(u'EPG downloaded successfully: %s' % epg_file)
+        return epg_file
+    except Exception as e:
+        log(u'ERROR downloading EPG: %s' % str(e))
+        return None
+
+def extract_epg(gz_file):
+    """
+    Extract gzipped EPG file
+    Returns: Path to extracted XML or None if failed
+    """
+    try:
+        xml_file = gz_file.replace('.gz', '')
+        
+        log(u'Extracting EPG: %s -> %s' % (gz_file, xml_file))
+        
+        with gzip.open(gz_file, 'rb') as f_in:
+            with open(xml_file, 'wb') as f_out:
+                f_out.write(f_in.read())
+        
+        log(u'EPG extracted successfully')
+        return xml_file
+        
+    except Exception as e:
+        log(u'ERROR extracting EPG: %s' % str(e))
+        return None
+
+def parse_epg(channel_ids, xml_file):
+    """
+    Parse EPG XML and return programme data
+    Returns: Dictionary of {channel_id: [programmes]}
+    """
+    try:
+        log(u'Parsing EPG XML: %s' % xml_file)
+        
+        tree = ET.parse(xml_file)
+        root = tree.getroot()
+        
+        epg_data = {i: [] for i in channel_ids}
+        
+        # Parse programmes
+        for programme in root.findall('programme'):
+            channel = programme.get('channel')
+            if channel in channel_ids:
+                epg_data[channel].append({
+                    'start': programme.get('start'),
+                    'stop': programme.get('stop'),
+                    'title': programme.find('title').text if programme.find('title') is not None else '',
+                    'desc': programme.find('desc').text if programme.find('desc') is not None else ''
+                })
+        
+        log(u'EPG parsed: %d channels, %d programmes' % (len(epg_data), sum(len(p) for p in epg_data.values())))
+        return epg_data
+        
+    except Exception as e:
+        log(u'ERROR parsing EPG: %s' % str(e))
+        return {}
+
+def generate_xmltv(channels, epg_data, output_file):
+    """
+    Generate XMLTV file for Kodi PVR
+    """
+    try:
+        log(u'Generating XMLTV: %s' % output_file)
+        
+        root = ET.Element('tv')
+        root.set('generator-info-name', 'Freeview.sk EPG Processor')
 
         for channel in channels:
-            #print(channel)
-            file.write(u'<channel id="%s">\n' % channel['id'])
-            file.write(u'<display-name>%s</display-name>\n' % channel['name'])
-            file.write(u'</channel>\n')
-
-        for channel in epg:
-            for program in epg[channel]:
-                begin = now
+            if channel.get('id') and channel.get('name'):
+                log(u"Channel %s : %s" % (channel['id'], channel['name']))
+                channel_elem = ET.SubElement(root, 'channel')
+                channel_elem.set('id', channel['id'])
+                display_name = ET.SubElement(channel_elem, 'display-name')
+                display_name.text = channel['name']
+        
+        # Add programmes
+        for channel_id, programmes in epg_data.items():
+            log(u'Processing %s' % channel_id)
+            for prog in programmes:
+                programme_elem = ET.SubElement(root, 'programme')
+                programme_elem.set('channel', channel_id)
+                programme_elem.set('start', prog['start'])
+                programme_elem.set('stop', prog['stop'])
                 
-                if 'start' in program and program['start']:
-                    begin = datetime.datetime.utcfromtimestamp(program['start'])
-                else:
-                    begin = program['dtstart']
-                end = begin
-                if 'duration' in program and program['duration']:
-                    end = begin + datetime.timedelta(minutes=program['duration'])
-                else:
-                    end = program['dtend']
+                title_elem = ET.SubElement(programme_elem, 'title')
+                title_elem.text = prog['title']
                 
-                file.write(u'<programme channel="%s" start="%s" stop="%s">\n' % (
-                    channel, begin.strftime('%Y%m%d%H%M%S'), end.strftime('%Y%m%d%H%M%S')))
-                if 'title' in program:
-                    file.write(u'<title>%s</title>\n' % html_escape(program['title']))
-                if 'description' in program and program['description'] != '':
-                    file.write(u'<desc>%s</desc>\n' % html_escape(program['description']))
-                if 'cover' in program:
-                    file.write(u'<icon src="%s"/>\n' % html_escape(program['cover']))
-                if 'genres' in program and len(program['genres']) > 0:
-                    file.write('<category>%s</category>\n' % ', '.join(program['genres']))
-                file.write(u'</programme>\n')
-        file.write(u'</tv>\n')
+                if prog['desc']:
+                    desc_elem = ET.SubElement(programme_elem, 'desc')
+                    desc_elem.set('lang', 'cs')
+                    desc_elem.text = prog['desc']
+        
+        # Write XML
+        tree = ET.ElementTree(root)
+        tree.write(output_file, encoding='utf-8', xml_declaration=True)
+        
+        log(u'XMLTV generated successfully: %s' % output_file)
+        return True
+        
+    except Exception as e:
+        log(u'ERROR generating XMLTV: %s' % str(e))
+        traceback.print_exc()
+        return False
 
+def update_epg(channels):
+    """
+    Main function to update EPG
+    Called by service.py or manually
+    """
+    log(u'========================================')
+    log(u'EPG UPDATE STARTED')
+    log(u'Source: %s' % EPG_URL)
+    log(u'========================================')
+    
+    # Download
+    gz_file = download_epg()
+    if not gz_file:
+        log(u'EPG update FAILED: Download error')
+        return False
+    
+    # Extract
+    xml_file = extract_epg(gz_file)
+    if not xml_file:
+        log(u'EPG update FAILED: Extraction error')
+        return False
+        
+    channel_ids = [i['id'] for i in channels if i.get('id') and i.get('name')]
+    
+    # Parse
+    epg_data = parse_epg(channel_ids, xml_file)
+    if not epg_data:
+        log(u'EPG update FAILED: Parsing error')
+        return False
+    
+    # Generate XMLTV
+    output_file = os.path.join(_addon_path, 'epg.xml')
+    if not generate_xmltv(channels, epg_data, output_file):
+        log(u'EPG update FAILED: Generation error')
+        return False
+    
+    # Cleanup
+    try:
+        os.remove(gz_file)
+        os.remove(xml_file)
+    except:
+        pass
+    
+    log(u'========================================')
+    log(u'EPG UPDATE COMPLETED SUCCESSFULLY')
+    log(u'Output: %s' % output_file)
+    log(u'========================================')
+    
+    return True

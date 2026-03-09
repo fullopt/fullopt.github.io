@@ -13,7 +13,9 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
-PROXY_BASE = "http://p.6f.sk" #TODO - to settings?
+from utils import setup_adaptive
+
+PROXY_BASE = "https://p.6f.sk" #TODO - to settings?
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
 CHANNELS = ['prima','love','krimi','max','cool','zoom','star','show']
 
@@ -28,9 +30,7 @@ def playcnn(_handle, _addon, params):
         stream = data['streamInfos'][0]['url']
         stream = stream.replace("_lq", "") #remove lq profile
         li = xbmcgui.ListItem(path=stream)
-        li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-        li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-        li.setProperty('inputstream.adaptive.manifest_type','hls')
+        setup_adaptive(li, None, 'hls')
         xbmcplugin.setResolvedUrl(_handle, True, li)
         
 
@@ -57,8 +57,6 @@ def play(_handle, _addon, params):
             pass
         
         li = xbmcgui.ListItem(path=PROXY_BASE + "/iprima.php?ch=" + channel)
-        li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-        li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-        li.setProperty('inputstream.adaptive.manifest_type','hls')
+        setup_adaptive(li, None, 'hls')
         xbmcplugin.setResolvedUrl(_handle, True, li)
         

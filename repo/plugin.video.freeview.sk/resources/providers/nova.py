@@ -14,6 +14,8 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
+from utils import setup_adaptive
+
 # DH_KEY_TOO_SMALL on android fix by https://stackoverflow.com/questions/38015537/python-requests-exceptions-sslerror-dh-key-too-small#76217135
 try:
     from urllib3.util import create_urllib3_context
@@ -99,10 +101,6 @@ def play(_handle, _addon, params):
     hls = hls.replace('\/','/')
 
     uheaders = urlencode(headers)
-    li = xbmcgui.ListItem(path=hls+'|'+uheaders)
-    li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-    li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-    li.setProperty('inputstream.adaptive.stream_headers',uheaders)
-    li.setProperty('inputstream.adaptive.manifest_headers',uheaders)
-    li.setProperty('inputstream.adaptive.manifest_type','hls')
+    li = xbmcgui.ListItem(path=hls)
+    setup_adaptive(li, uheaders, 'hls')
     xbmcplugin.setResolvedUrl(_handle, True, li)

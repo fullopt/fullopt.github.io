@@ -13,7 +13,8 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
-
+from utils import setup_adaptive
+    
 CHANNELS = {
     'markiza':"https://www.markiza.sk/live/1-markiza",
     'doma':"https://www.markiza.sk/live/3-doma",
@@ -98,10 +99,8 @@ def play(_handle, _addon, params):
 
     #note - adaptive nejde, lebo neposiela headre
     uheaders = urlencode(headers)
-    li = xbmcgui.ListItem(path=hls+'|'+uheaders)
-    li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-    li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-    li.setProperty('inputstream.adaptive.stream_headers',uheaders)
-    li.setProperty('inputstream.adaptive.manifest_headers',uheaders)
-    li.setProperty('inputstream.adaptive.manifest_type','hls')
+
+    li = xbmcgui.ListItem(path=hls)
+    setup_adaptive(li, uheaders, 'hls')
+    
     xbmcplugin.setResolvedUrl(_handle, True, li)

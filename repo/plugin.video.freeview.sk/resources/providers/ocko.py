@@ -11,6 +11,7 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
+from utils import setup_adaptive
 
 CHANNELS = {
     'ocko':{'mpd':'https://ocko-live-dash.ssl.cdn.cra.cz/cra_live2/ocko.stream.1.smil/manifest.mpd','hls':'https://ocko-live.ssl.cdn.cra.cz/channels/ocko/playlist.m3u8'},
@@ -28,16 +29,14 @@ def play(_handle, _addon, params):
     prefer_mpd = xbmcplugin.getSetting(_handle, 'ockompd') == 'true'
 
     channel = CHANNELS[channel]
-
+    
+    uheaders = urlencode(HEADERS)
+    
     if prefer_mpd:
-        li = xbmcgui.ListItem(path=channel['mpd']+'|'+urlencode(HEADERS))
-        li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-        li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-        li.setProperty('inputstream.adaptive.manifest_type','mpd')
+        li = xbmcgui.ListItem(path=channel['mpd'])
+        setup_adaptive(li, uheaders, 'mpd')
         xbmcplugin.setResolvedUrl(_handle, True, li)
     else:
-        li = xbmcgui.ListItem(path=channel['hls']+'|'+urlencode(HEADERS))
-        li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-        li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-        li.setProperty('inputstream.adaptive.manifest_type','hls')
+        li = xbmcgui.ListItem(path=channel['hls'])
+        setup_adaptive(li, uheaders, 'hls')
         xbmcplugin.setResolvedUrl(_handle, True, li)

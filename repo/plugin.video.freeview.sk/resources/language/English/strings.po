@@ -67,14 +67,6 @@ msgctxt "#30093"
 msgid "Interval generovania v hodinách"
 msgstr "Interval generovania v hodinách"
 
-msgctxt "#30094"
-msgid "Koľko dní generovať"
-msgstr "Koľko dní generovať"
-
-msgctxt "#30095"
-msgid "Zobrazovať program pri náhľade staníc cez doplnok"
-msgstr "Zobrazovať program pri náhľade staníc cez doplnok"
-
 msgctxt "#30100"
 msgid "Markíza"
 msgstr "Markíza"
@@ -103,10 +95,6 @@ msgctxt "#30111"
 msgid "Preferovať DASH streams (mpd)"
 msgstr "Preferovať DASH streams (mpd)"
 
-msgctxt "#30112"
-msgid "Použiť alternatívne streamy"
-msgstr "Použiť alternatívne streamy"
-
 msgctxt "#30120"
 msgid "Óčko"
 msgstr "Óčko"
@@ -114,34 +102,6 @@ msgstr "Óčko"
 msgctxt "#30121"
 msgid "Preferovať DASH streams (mpd)"
 msgstr "Preferovať DASH streams (mpd)"
-
-msgctxt "#30130"
-msgid "Retro"
-msgstr "Retro"
-
-msgctxt "#30131"
-msgid "Použiť najvyšší bitrate namiesto adaptívneho (ktorý blbne)"
-msgstr "Použiť najvyšší bitrate namiesto adaptívneho (ktorý blbne)"
-
-msgctxt "#30132"
-msgid "Použiť alternatívne streamy"
-msgstr "Použiť alternatívne streamy"
-
-msgctxt "#30140"
-msgid "Joj"
-msgstr "Joj"
-
-msgctxt "#30141"
-msgid "Preferuj JojPlay streamy"
-msgstr "Preferuj JojPlay streamy"
-
-msgctxt "#30301"
-msgid "Lounge TV ide prehrať len na Kodi Nexus a novšom."
-msgstr "Lounge TV ide prehrať len na Kodi Nexus a novšom."
-
-msgctxt "#30302"
-msgid "Lounge TV využíva Widevine DRM, preto potrebuje addon InputStream Helper."
-msgstr "Lounge TV využíva Widevine DRM, preto potrebuje addon InputStream Helper."
 
 msgctxt "#30400"
 msgid "Sorry, nepodarilo sa mi získať stream"
