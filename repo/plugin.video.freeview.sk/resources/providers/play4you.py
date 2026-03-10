@@ -29,10 +29,7 @@ CHANNELS = {
     
     'bbcnews':'fkz3jbmhs7qr',
     
-    'comedycentral':'fgro15rvvyjz',
-    'comedytv':'7q1iy472cgbe',
-    'natgeo':'96xr2tdn2pcs',
-    'natgeowild':'6upbqu3pnoes',
+    'comedytv':'lqjaj7maozbf',
     'babysharktv':'zjfc0unr8dki'
 }
 

@@ -19,7 +19,10 @@ try:
 except ImportError:
     from xbmcvfs import translatePath
     
-EPG_URL = 'https://iptv-epg.org/files/epg-cz.xml.gz'
+EPG_URLS = [
+    'https://iptv-epg.org/files/epg-cz.xml.gz',
+    'https://iptv-epg.org/files/epg-hu.xml.gz'
+]
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36'}
 
 _addon = xbmcaddon.Addon()
@@ -40,13 +43,13 @@ def log(msg):
             pass
     xbmc.log('[FREEVIEW EPG] %s' % msg, xbmc.LOGINFO)
 
-def download_epg():
+def download_epg(url):
     """
     Download EPG data from iptv-epg.org
     Returns: Path to downloaded file or None if failed
     """
 
-    log(u'Downloading EPG from: %s' % EPG_URL)
+    log(u'Downloading EPG from: %s' % url)
     
     epg_file = os.path.join(_addon_path, 'epg-cz.xml.gz')
 
@@ -54,7 +57,7 @@ def download_epg():
 
     try:
         session = requests.Session()
-        r = session.get(EPG_URL, headers=HEADERS, stream=True, allow_redirects=True)
+        r = session.get(url, headers=HEADERS, stream=True, allow_redirects=True)
         r.raise_for_status()
 
         with open(epg_file, "wb") as f:
@@ -174,41 +177,48 @@ def update_epg(channels):
     """
     log(u'========================================')
     log(u'EPG UPDATE STARTED')
-    log(u'Source: %s' % EPG_URL)
     log(u'========================================')
     
-    # Download
-    gz_file = download_epg()
-    if not gz_file:
-        log(u'EPG update FAILED: Download error')
-        return False
-    
-    # Extract
-    xml_file = extract_epg(gz_file)
-    if not xml_file:
-        log(u'EPG update FAILED: Extraction error')
-        return False
-        
     channel_ids = [i['id'] for i in channels if i.get('id') and i.get('name')]
     
-    # Parse
-    epg_data = parse_epg(channel_ids, xml_file)
-    if not epg_data:
-        log(u'EPG update FAILED: Parsing error')
-        return False
+    # This dictionary will hold all combined data from all sources
+    merged_epg_data = {i: [] for i in channel_ids}
+    
+    for url in EPG_URLS:
+        # Download
+        gz_file = download_epg(url)
+        if not gz_file:
+            log(u'EPG update FAILED: Download error')
+            return False
+    
+        # Extract
+        xml_file = extract_epg(gz_file)
+        if not xml_file:
+            log(u'EPG update FAILED: Extraction error')
+            return False
+    
+        # Parse & merge
+        epg_data = parse_epg(channel_ids, xml_file)
+        if not epg_data:
+            log(u'EPG update FAILED: Parsing error')
+            return False
+        for cid, programmes in epg_data.items():
+            if programmes:
+                # Add new programmes to our master list for this channel
+                merged_epg_data[cid].extend(programmes)
+                
+        # Cleanup
+        try:
+            os.remove(gz_file)
+            os.remove(xml_file)
+        except:
+            pass
     
     # Generate XMLTV
     output_file = os.path.join(_addon_path, 'epg.xml')
-    if not generate_xmltv(channels, epg_data, output_file):
+    if not generate_xmltv(channels, merged_epg_data, output_file):
         log(u'EPG update FAILED: Generation error')
         return False
-    
-    # Cleanup
-    try:
-        os.remove(gz_file)
-        os.remove(xml_file)
-    except:
-        pass
     
     log(u'========================================')
     log(u'EPG UPDATE COMPLETED SUCCESSFULLY')
