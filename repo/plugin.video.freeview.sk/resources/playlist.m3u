@@ -138,7 +138,5 @@ plugin://plugin.video.freeview.sk/?provider=play4you&channel=filmplusz
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_uk.png" tvg-name="BBC News",BBC News
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
 
-#EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="Comedy TV",Comedy TV
-plugin://plugin.video.freeview.sk/?provider=play4you&channel=comedytv
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="BabyShark TV",BabyShark TV
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=babysharktv

@@ -13,7 +13,8 @@ try:
     from urllib import urlencode
 except ImportError:
     from urllib.parse import urlencode
-
+    
+from utils import setup_adaptive
 
 BASE_URL = 'https://play4you.top'
 CHANNELS = {
@@ -28,8 +29,7 @@ CHANNELS = {
     'filmplusz':'r40977afac7c',
     
     'bbcnews':'fkz3jbmhs7qr',
-    
-    'comedytv':'lqjaj7maozbf',
+
     'babysharktv':'zjfc0unr8dki'
 }
 
@@ -65,9 +65,5 @@ def play(_handle, _addon, params):
     hls = match.group(0)
     
     li = xbmcgui.ListItem(path=hls+'|'+urlencode(HEADERS))
-    li.setProperty('inputstreamaddon','inputstream.adaptive') #kodi 18
-    li.setProperty('inputstream','inputstream.adaptive') #kodi 19
-    li.setProperty('inputstream.adaptive.manifest_type','hls')
+    setup_adaptive(li, None, 'hls')
     xbmcplugin.setResolvedUrl(_handle, True, li)
-
-
