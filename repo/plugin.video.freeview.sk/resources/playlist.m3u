@@ -17,7 +17,7 @@ plugin://plugin.video.freeview.sk/?provider=rtvs&channel=nrsr
 plugin://plugin.video.freeview.sk/?provider=joj&channel=joj
 #EXTINF:0 tvg-id="JOJPLUS.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/plus.png" tvg-name="JOJ Plus",JOJ Plus
 plugin://plugin.video.freeview.sk/?provider=joj&channel=plus
-#EXTINF:0 tvg-id="WAU.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/wau.png" tvg-name="WAU",WAU
+#EXTINF:0 tvg-id="WAU.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/jojkrimi.png" tvg-name="JOJ Krimi",JOJ Krimi
 plugin://plugin.video.freeview.sk/?provider=joj&channel=wau
 #EXTINF:0 tvg-id="JOJŠPORT.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/jojsport.png" tvg-name="JOJ Šport",JOJ Šport
 plugin://plugin.video.freeview.sk/?provider=joj&channel=jojsport

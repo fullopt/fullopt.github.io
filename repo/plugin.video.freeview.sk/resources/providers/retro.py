@@ -13,7 +13,7 @@ try:
 except ImportError:
     from urllib.parse import urlencode
 
-from utils import setup_adaptive
+#from utils import setup_adaptive
 
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36'}
 
@@ -31,12 +31,12 @@ def play(_handle, _addon, params):
     response = session.get("https://retromusic.cz/", headers=headers)
     content = response.text
 
-    matches = re.search('file: "(.+)",', content)
+    matches = re.search('<div id="retro-tv"><iframe src="(.+)" ></iframe></div>', content)
     if bool(matches):
         playlist = matches.group(1)
     else:
         return brexit(_addon, _handle, 'do')
 
     li = xbmcgui.ListItem(path=playlist)
-    setup_adaptive(li, None, 'hls')
+    #setup_adaptive(li, None, 'hls')
     xbmcplugin.setResolvedUrl(_handle, True, li)
