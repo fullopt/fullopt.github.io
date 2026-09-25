@@ -46,7 +46,7 @@ def play(_handle, _addon, params):
     if response.status_code != 200:
         raise Exception(f"{_addon.getLocalizedString(30400)} (1): http={response.status_code}")
     
-    match= re.search(r'load\.php\?a=[a-zA-Z0-9]+&b=[a-zA-Z0-9]+&c=', response.text)
+    match= re.search(r'load\.php\?a=[a-zA-Z0-9]+&b=[a-zA-Z0-9]+', response.text)
     if not match:
         raise Exception(f"{_addon.getLocalizedString(30400)} (2):\nMissing LOAD")
     str_load = match.group(0)
