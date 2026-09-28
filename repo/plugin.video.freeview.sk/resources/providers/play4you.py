@@ -37,34 +37,42 @@ CHANNELS = {
 HEADERS={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.90 Safari/537.36', 'Referer': BASE_URL}
 
 def play(_handle, _addon, params):
-    channel = params['channel']
-    if not channel in CHANNELS:
+    channel = params.get('channel')
+    if not channel or channel not in CHANNELS:
         raise #TODO
     
     session = requests.Session()
+    
+    # First request: Embed page
     response = session.get(f"{BASE_URL}/e/{CHANNELS[channel]}", headers=HEADERS)
     if response.status_code != 200:
         raise Exception(f"{_addon.getLocalizedString(30400)} (1): http={response.status_code}")
     
-    match= re.search(r'load\.php\?a=[a-zA-Z0-9]+&b=[a-zA-Z0-9]+', response.text)
+    # Extract data-load-url attribute
+    match = re.search(r'data-load-url=["\']([^"\']+)["\']', response.text)
     if not match:
-        raise Exception(f"{_addon.getLocalizedString(30400)} (2):\nMissing LOAD")
-    str_load = match.group(0)
+        raise Exception("Missing data-load-url attribute")
+    str_load = match.group(1).replace('&amp;', '&').lstrip('/')
     
-    timestamp = int(time.time())
-    response = requests.get(f"{BASE_URL}/{str_load}{timestamp}", headers=HEADERS)
+    sep = '&' if '?' in str_load else '?'
+    timestamp = int(time.time() * 1000)
+    
+    # Second request: Fetch stream payload (using session)
+    payload_url = f"{BASE_URL}/{str_load}{sep}c={timestamp}"
+    response = session.get(payload_url, headers=HEADERS)
     if response.status_code != 200:
         raise Exception(f"{_addon.getLocalizedString(30400)} (3): http={response.status_code}")
     
-    match = re.search(r'https?://[^\s\'"]*\.m3u8[^\s\'"]*', response.text)
-    if not match:
-        match = re.search(r'<div\s+class="info".*?>.*?<p>(.*?)</p>.*?</div>', response.text, re.S)
-        if not match:
-            raise Exception(f"{_addon.getLocalizedString(30400)} (4):\nNo info")
-        else:
-            raise Exception(f"{_addon.getLocalizedString(30400)} (4):\n{match.group(1).strip()}")
-    hls = match.group(0)
+    # Parse stream JSON
+    data = response.json()
+    if data.get("ok") is True:
+        hls = data.get("config", {}).get("churl")
+        if not hls:
+            raise Exception(f"{_addon.getLocalizedString(30400)} (4):\nNo HLS")
+    else:
+        raise Exception(f"{_addon.getLocalizedString(30400)} (4):\nAPI response is FALSE")
     
-    li = xbmcgui.ListItem(path=hls+'|'+urlencode(HEADERS))
+    # Pass stream URL with headers to Kodi
+    li = xbmcgui.ListItem(path=hls + '|' + urlencode(HEADERS))
     setup_adaptive(li, None, 'hls')
     xbmcplugin.setResolvedUrl(_handle, True, li)
