@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.freeview.sk" version="2.3.5" name="freeview.sk" provider-name="cache-sk / fullopt">
+<addon id="plugin.video.freeview.sk" version="2.3.6" name="freeview.sk" provider-name="cache-sk / fullopt">
     <requires>
         <import addon="script.module.requests"/>
         <import addon="script.module.beautifulsoup4"/>
@@ -21,6 +21,8 @@
             <icon>icon.jpg</icon>
         </assets>
         <news>
+[B]2.3.6[/B]
+- Vypnutie primy kedze je geoblocknute
 [B]2.3.3-2.3.5[/B]
 - Plauy4You fix, ostatne fixy
 [B]2.3.2[/B]

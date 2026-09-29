@@ -84,21 +84,21 @@ plugin://plugin.video.freeview.sk/?provider=nova&channel=novacinema
 #EXTINF:0 tvg-id="NOVASPORT2.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/novasport2.png" tvg-name="Nova Sport 2",Nova Sport 2
 #plugin://plugin.video.freeview.sk/?provider=nova&channel=novasport2
 #EXTINF:0 tvg-id="PRIMA.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/prima.png" tvg-name="Prima",Prima
-plugin://plugin.video.freeview.sk/?provider=prima&channel=prima
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=prima
 #EXTINF:0 tvg-id="PRIMACOOL.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primacool.png" tvg-name="Prima Cool",Prima Cool
-plugin://plugin.video.freeview.sk/?provider=prima&channel=cool
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=cool
 #EXTINF:0 tvg-id="PRIMAMAX.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primamax.png" tvg-name="Prima Max",Prima Max
-plugin://plugin.video.freeview.sk/?provider=prima&channel=max
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=max
 #EXTINF:0 tvg-id="PRIMAKRIMI.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primakrimi.png" tvg-name="Prima Krimi",Prima Krimi
-plugin://plugin.video.freeview.sk/?provider=prima&channel=krimi
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=krimi
 #EXTINF:0 tvg-id="PRIMALOVE.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primalove.png" tvg-name="Prima Love",Prima Love
-plugin://plugin.video.freeview.sk/?provider=prima&channel=love
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=love
 #EXTINF:0 tvg-id="PRIMAZOOM.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primazoom.png" tvg-name="Prima Zoom",Prima Zoom
-plugin://plugin.video.freeview.sk/?provider=prima&channel=zoom
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=zoom
 #EXTINF:0 tvg-id="PRIMASTAR.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primastar.png" tvg-name="Prima Star",Prima Star
-plugin://plugin.video.freeview.sk/?provider=prima&channel=star
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=star
 #EXTINF:0 tvg-id="PRIMASHOW.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/primashow.png" tvg-name="Prima Show",Prima Show
-plugin://plugin.video.freeview.sk/?provider=prima&channel=show
+#plugin://plugin.video.freeview.sk/?provider=prima&channel=show
 #EXTINF:0 tvg-id="CNNPRIMANEWS.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/cnnprimanews.png" tvg-name="CNN Prima News",CNN Prima News
 plugin://plugin.video.freeview.sk/?provider=prima&channel=cnn
 #EXTINF:0 tvg-id="ÓČKO.cz" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/ocko.png" tvg-name="Óčko",Óčko
@@ -136,7 +136,7 @@ plugin://plugin.video.freeview.sk/?provider=play4you&channel=supertv2
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=filmplusz
 
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_uk.png" tvg-name="BBC News",BBC News
-plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
+#plugin://plugin.video.freeview.sk/?provider=play4you&channel=bbcnews
 
 #EXTINF:0 tvg-id="0" tvg-logo="special://home/addons/plugin.video.freeview.sk/resources/logos/flag_us.png" tvg-name="BabyShark TV",BabyShark TV
 plugin://plugin.video.freeview.sk/?provider=play4you&channel=babysharktv
